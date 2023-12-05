@@ -26,18 +26,14 @@ export const userSignup = async (
   try {
     const { name, email, password } = req.body;
 
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: "Missing fields" });
-    } else {
-      const hashedPassword = await hash(password, 10);
+    const hashedPassword = await hash(password, 10);
 
-      const user = new User({ name, email, password: hashedPassword });
-      await user.save();
+    const user = new User({ name, email, password: hashedPassword });
+    await user.save();
 
-      return res
-        .status(201)
-        .json({ id: user._id.toString(), message: "User created" });
-    }
+    return res
+      .status(201)
+      .json({ id: user._id.toString(), message: "User created" });
   } catch (error) {
     console.log(error);
 
