@@ -12,6 +12,6 @@ app.use(express.json());
 // Logger !todo remove in production
 app.use(morgan("dev"));
 
-app.use("/ap/v1", appRouter);
+app.use("/api/v1", appRouter);
 
 export default app;
