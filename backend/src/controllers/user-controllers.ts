@@ -58,7 +58,7 @@ export const userSignup = async (
 
     return res
       .status(201)
-      .json({ id: user._id.toString(), message: "User created" });
+      .json({ message: "User created", name: user.name, email: user.email });
   } catch (error) {
     console.log(error);
 
@@ -102,7 +102,7 @@ export const userLogin = async (
         signed: true,
       });
 
-      return res.status(200).json({ message: "Ok", id: user._id.toString() });
+      return res.status(200).json({ message: "Ok", name: user.name, email: user.email });
     }
   } catch (error) {
     console.log(error);
