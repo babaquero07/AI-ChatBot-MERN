@@ -32,3 +32,13 @@ export const sendChatRequest = async (message: string) => {
 
   return res.data;
 };
+
+export const getUserChats = async () => {
+  const res = await axios.get("/chat/all-chats");
+
+  if (res.status !== 200) {
+    throw new Error("Unable to authenticate");
+  }
+
+  return res.data;
+};
