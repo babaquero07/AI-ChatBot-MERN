@@ -5,6 +5,7 @@ import { red } from "@mui/material/colors";
 import { useAuth } from "../context/AuthContext";
 
 import ChatItem from "../components/chat/ChatItem";
+import { sendChatRequest } from "../helpers/api-communicator";
 
 type Message = {
   role: "user" | "assistant";
@@ -26,6 +27,9 @@ const Chat = () => {
     const newMessage: Message = { role: "user", content };
 
     setChatMessages((prev) => [...prev, newMessage]);
+
+    const chatData = await sendChatRequest(content);
+    setChatMessages([...chatData.chats]);
   };
 
   return (
@@ -111,7 +115,7 @@ const Chat = () => {
             fontWeight: "600",
           }}
         >
-          Model - GPT 4
+          Model - GPT 3.5 Turbo
         </Typography>
         <Box
           sx={{

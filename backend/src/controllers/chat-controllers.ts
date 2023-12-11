@@ -29,14 +29,11 @@ export const generateChatCompletition = async (
 
     const chatResponse = await openai.chat.completions.create({
       messages: chats,
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
     });
-    console.log(
-      "🚀 ~ file: chat-controllers.ts:33 ~ chatResponse:",
-      chatResponse
-    );
-    //   user.chats.push()
-    // await user.save();
+
+    user.chats.push(chatResponse.choices[0].message);
+    await user.save();
 
     return res.status(200).json({ chats: user.chats });
   } catch (error) {
