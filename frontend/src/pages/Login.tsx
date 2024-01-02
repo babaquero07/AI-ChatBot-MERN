@@ -3,9 +3,18 @@ import { IoIosLogIn } from "react-icons/io";
 import CustomizedInput from "../components/shared/CustomizedInput";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Login = () => {
   const auth = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth?.user) {
+      return navigate("/chat");
+    }
+  }, [auth]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,7 +26,10 @@ const Login = () => {
     try {
       toast.loading("Logging in...", { id: "login" });
       await auth?.login(email, password);
-      toast.success("Signed in successfully.", { id: "login" });
+
+      toast.success("Signed in successfully!", {
+        id: "login",
+      });
     } catch (error) {
       console.log(error);
       toast.error("Signing in failed.", { id: "login" });

@@ -52,3 +52,13 @@ export const deleteUserChats = async () => {
 
   return res.data;
 };
+
+export const logoutUser = async () => {
+  const res = await axios.get("/user/logout");
+
+  if (res.status !== 200) {
+    throw new Error("Unable to logout");
+  }
+
+  return res.data;
+};

@@ -1,4 +1,4 @@
-import { useRef, useState, useLayoutEffect } from "react";
+import { useRef, useState, useLayoutEffect, useEffect } from "react";
 import { Avatar, Box, Button, Typography, IconButton } from "@mui/material";
 import { IoMdSend } from "react-icons/io";
 import { red } from "@mui/material/colors";
@@ -11,6 +11,7 @@ import {
   deleteUserChats,
 } from "../helpers/api-communicator";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 type Message = {
   role: "user" | "assistant";
@@ -20,7 +21,9 @@ type Message = {
 const Chat = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
+
   const auth = useAuth();
+  const navigate = useNavigate();
 
   useLayoutEffect(() => {
     if (auth?.isLoggedIn && auth.user) {
@@ -35,6 +38,12 @@ const Chat = () => {
           console.log(err);
           toast.error("Failed to load chats", { id: "loadchats" });
         });
+    }
+  }, [auth]);
+
+  useEffect(() => {
+    if (!auth?.user) {
+      return navigate("/login");
     }
   }, [auth]);
 
